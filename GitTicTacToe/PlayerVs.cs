@@ -29,7 +29,7 @@ namespace GitTicTacToe
                 row -= 1; column -= 1;
                 if (row >= Board.GameBoard.GetLength(0) || column >= Board.GameBoard.GetLength(1) || row < 0 || column < 0)
                 {
-                    Console.WriteLine("Position is outside the playing field, please enter again\n");
+                    Console.WriteLine("position is invalid, please enter again\n");
                     Move();
                 }
                 else if (Board.GameBoard[row, column] != freeCell)

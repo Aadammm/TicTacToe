@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ***Tic Tac Toe***  
+=======
+**Tic Tac Toe**
+>>>>>>> 7fd19586380caa4be4190e28ea38a34d1216ac05
 with choice of difficulty:
 ___
 ```

@@ -1,10 +1,10 @@
-***Tic Tac Toe 
+**Tic Tac Toe 
 with choice of difficulty:
 ___
 ```
-Player vs Player
+Player vs Player	//against human
 Easy				//against CPU with random choose		
-Medium				//against CPU with more intelligent
-Hard				//against minimax algorithm
+Medium				//against CPU with smart choose
+Hard				//against Minimax algorithm
 ```
-_Enjoy_ 
+_Enjoy_  

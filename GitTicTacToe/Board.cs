@@ -15,6 +15,7 @@ namespace GitTicTacToe
             get { return GameBoard[row, column]; }
             set { GameBoard[row, column] = value; }
         }
+
         /// <summary>
         /// vypis hracej plochy
         /// </summary>

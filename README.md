@@ -8,4 +8,5 @@ Medium				//against CPU with smart choose
 Hard				//against Minimax algorithm
 ```
 ___
+*the game is played in the console*
 _Enjoy_  

@@ -10,46 +10,48 @@ namespace GitTicTacToe
     delegate void Delegate();
     internal class Game
     {
-        Board plocha = new Board();
         Delegate Choose;
-        string[] optionsMenu = { "Player vs Player", "Easy", "Medium", "Hard" };
-        int enemy = 0;
-        /// <summary>
-        /// začiatok hry
-        /// </summary>
-        public void Start()
+        readonly Board _board;
+        readonly PlayerVs _playerVs;
+        readonly string[] _optionsMenu = { "Player vs Player", "Easy", "Medium", "Hard" };
+        int _enemy;
+
+        public Game()
         {
-            //
-            Menu();
-            Against();
-            while (Check.Winner == Winner.NoBody)
+            _board = new Board();
+            _playerVs = new PlayerVs();
+            _enemy = 0;
+        }
+
+        public void  TicTacToe()
+        {
+            DisplayMenu();
+            ChooseAgainstWhom();
+            while (Check.Winner == WhoWin.Nobody)
             {
                 Console.Clear();
-                Console.WriteLine(plocha);
+                Console.WriteLine(_board);
                 Choose();
                 Check.Checking();
                 Thread.Sleep(100);
-                if (Check.Winner != Winner.NoBody)
-                    TheEnd();
+                if (Check.Winner != WhoWin.Nobody)
+                    EndTicTacToe();
             }
 
         }
-        /// <summary>
-        /// vypíše víťaza a možnosť hrať znovu 
-        /// </summary>
-        private void TheEnd()
+        private void EndTicTacToe()
         {
             Console.Clear();
-            Console.WriteLine(plocha);
+            Console.WriteLine(_board);
             switch (Check.Winner)
             {
-                case Winner.WinX:
+                case WhoWin.WinX:
                     Console.WriteLine("Won X");
                     break;
-                case Winner.WinO:
+                case WhoWin.WinO:
                     Console.WriteLine("Won O");
                     break;
-                case Winner.Draw:
+                case WhoWin.Draw:
                     Console.WriteLine("DRAW");
                     break;
             }
@@ -57,71 +59,63 @@ namespace GitTicTacToe
             char zadanyZnak = Console.ReadKey().KeyChar;
             if (zadanyZnak == 'a')
             {
-                Check.Winner = Winner.NoBody;
+                Check.ChangeStatusToNobody();
                 for (int i = 0; i < 3; i++)
                 {
                     for (int j = 0; j < 3; j++)
                     {
-                        plocha[j, i] = 0;
+                        _board[j, i] = 0;
                     }
                 }
-                Start();
+                TicTacToe();
             }
 
         }
-        /// <summary>
-        /// Menu - určenie obtiažnosti
-        /// </summary>
-        private void Menu()
+        private void DisplayMenu()
         {
             Console.CursorVisible = false;
             ConsoleKeyInfo key;
             do
             {
                 Console.Clear();
-                for (int i = 0; i < optionsMenu.Length; i++)
+                for (int i = 0; i < _optionsMenu.Length; i++)
                 {
-                    if (enemy == i)
-                        Console.WriteLine("<" + optionsMenu[i] + ">");
+                    if (_enemy == i)
+                        Console.WriteLine("<" + _optionsMenu[i] + ">");
                     else
-                        Console.WriteLine(" " + optionsMenu[i]);
+                        Console.WriteLine(" " + _optionsMenu[i]);
                 }
                 key = Console.ReadKey();
 
                 switch (key.Key)
                 {
                     case ConsoleKey.UpArrow:
-                        enemy = (enemy == 0) ? optionsMenu.Length - 1 : enemy - 1;
+                        _enemy = (_enemy == 0) ? _optionsMenu.Length - 1 : _enemy - 1;
                         break;
                     case ConsoleKey.DownArrow:
-                        enemy = (enemy == optionsMenu.Length - 1) ? 0 : enemy + 1;
+                        _enemy = (_enemy == _optionsMenu.Length - 1) ? 0 : _enemy + 1;
                         break;
                 }
             }
             while (key.Key != ConsoleKey.Enter);
         }
-        /// <summary>
-        /// uloží do delegáta voľbu z Menu
-        /// </summary>
-        private void Against()
+        private void ChooseAgainstWhom()
         {
-            PlayerVs hracVs = new PlayerVs();
-            switch (enemy)
+            switch (_enemy)
             {
                 case 0:
-                    Choose = hracVs.PlayerVsPlayer;
+                    Choose = _playerVs.PlayerVsPlayer;
                     break;
                 case 1:
-                    Choose = hracVs.Easy;
+                    Choose = _playerVs.Easy;
                     break;
                 case 2:
-                    Choose = hracVs.Medium;
+                    Choose = _playerVs.Medium;
                     break;
                 case 3:
-                    Choose = hracVs.Hard;
+                    Choose = _playerVs.Hard;
                     break;
             }
-
         }
     }
 }

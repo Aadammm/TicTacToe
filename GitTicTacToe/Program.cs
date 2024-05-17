@@ -11,7 +11,7 @@ namespace GitTicTacToe
         static void Main(string[] args)
         {
             Game ticTacToe = new Game();
-            ticTacToe.Start();
+            ticTacToe.TicTacToe();
 
             Console.ReadLine();
         }

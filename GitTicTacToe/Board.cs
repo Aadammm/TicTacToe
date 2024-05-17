@@ -9,17 +9,13 @@ namespace GitTicTacToe
     internal class Board
     {
         public static readonly int[,] GameBoard = new int[3, 3];
-        string[] playerSign = { " ", "X", "O" };
+        readonly string[] playerSign = { " ", "X", "O" };
         public int this[int row, int column]
         {
             get { return GameBoard[row, column]; }
             set { GameBoard[row, column] = value; }
         }
 
-        /// <summary>
-        /// vypis hracej plochy
-        /// </summary>
-        /// <returns></returns>
         public override string ToString()
         {
             string text = "  1 2 3\n";
@@ -35,9 +31,6 @@ namespace GitTicTacToe
             }
             return text;
         }
-        /// <summary>
-        /// skontroluje ci je volne policko
-        /// </summary>
         public static bool FreePlace()
         {
             foreach (int number in GameBoard)

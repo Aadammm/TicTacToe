@@ -6,94 +6,81 @@ using System.Threading.Tasks;
 
 namespace GitTicTacToe
 {
-        public enum Winner { NoBody, Draw, WinX, WinO }
-        internal static class Check
+    public enum WhoWin { Nobody, Draw, WinX, WinO }
+    internal static class Check
+    {
+        static int _winX;
+        static int _winO;
+        public static WhoWin Winner;
+        public static void Checking()
         {
-            static int winX;
-            static int winO;
-            public static Winner Winner = Winner.NoBody;
-            /// <summary>
-            /// Kontrola hracej plochy
-            /// </summary>
-            public static void Checking()
+            Winner = WhoWin.Nobody;
+            if (Winner == WhoWin.Nobody)
+                RowsCheck();
+            if (Winner == WhoWin.Nobody)
+                ColumnsCheck();
+            if (Winner == WhoWin.Nobody)
+                DiagonalCheck();
+            if (!Board.FreePlace() && Winner == WhoWin.Nobody)
+                Winner = WhoWin.Draw;
+        }
+        public static void ChangeStatusToNobody()
+        {
+            Winner = WhoWin.Nobody;
+        }
+        static void RowsCheck()
+        {
+            for (int i = 0; i < 3 && Winner == WhoWin.Nobody; i++)
             {
-                if (Winner == Winner.NoBody)
-                    Rows();
-                if (Winner == Winner.NoBody)
-                    Columns();
-                if (Winner == Winner.NoBody)
-                    Diagonal();
-                if (!Board.FreePlace() && Winner == Winner.NoBody)
-                    Winner = Winner.Draw;
-            }
-            /// <summary>
-            /// skontroluje ci su 3 rovnake symboli vedla seba v riadku
-            /// </summary>
-            static void Rows()
-            {
-                for (int i = 0; i < 3 && Winner == Winner.NoBody; i++)
+                _winX = 0;
+                _winO = 0;
+                for (int j = 0; j < 3 && Winner == WhoWin.Nobody; j++)
                 {
-                    winX = 0;
-                    winO = 0;
-                    for (int j = 0; j < 3 && Winner == Winner.NoBody; j++)
-                    {
-                        Win(j, i);
-                    }
-                }
-
-            }
-            /// <summary>
-            /// skontroluje ci su 3 rovnake symboli vedla seba v stlpci
-            /// </summary>
-            static void Columns()
-            {
-                for (int i = 0; i < 3 && Winner == Winner.NoBody; i++)
-                {
-                    winX = 0;
-                    winO = 0;
-                    for (int j = 0; j < 3 && Winner == Winner.NoBody; j++)
-                    {
-                        Win(i, j);
-                    }
-                }
-            }
-            /// <summary>
-            ///  skontroluje ci su 3 rovnake symboli diagonalne
-            /// </summary>
-            static void Diagonal()
-            {
-                winX = 0;
-                winO = 0;
-                for (int i = 0; i < 3 && Winner == Winner.NoBody; i++)
-                {
-                    Win(i, i);
-                }
-                winX = 0;
-                winO = 0;
-                for (int i = 0; i < 3 && Winner == Winner.NoBody; i++)
-                {
-                    Win(2 - i, i);
+                    WinnerCheck(j,i); 
                 }
             }
 
-            /// <summary>
-            /// Určuje výhercu
-            /// </summary>
-            /// <param name="i"></param>
-            /// <param name="j"></param>
-            static Winner Win(int i, int j)
+        }
+        static void ColumnsCheck()
+        {
+            for (int i = 0; i < 3 && Winner == WhoWin.Nobody; i++)
             {
-                winX = Board.GameBoard[i, j] == 1 ? winX + 1 : winX;
-                winO = Board.GameBoard[i, j] == 2 ? winO + 1 : winO;
-                if (winX == 3)
+                _winX = 0;
+                _winO = 0;
+                for (int j = 0; j < 3 && Winner == WhoWin.Nobody; j++)
                 {
-                    return Winner = Winner.WinX;
+                    WinnerCheck(i, j);
                 }
-                if (winO == 3)
-                {
-                    return Winner = Winner.WinO;
-                }
-                return Winner;
             }
         }
+        static void DiagonalCheck()
+        {
+            _winX = 0;
+            _winO = 0;
+            for (int i = 0; i < 3 && Winner == WhoWin.Nobody; i++)
+            {
+                WinnerCheck(i, i);
+            }
+            _winX = 0;
+            _winO = 0;
+            for (int i = 0; i < 3 && Winner == WhoWin.Nobody; i++)
+            {
+                WinnerCheck(2 - i, i);
+            }
+        }
+        static void WinnerCheck(int i, int j)
+        {
+            _winX = Board.GameBoard[i, j] == 1 ? _winX + 1 : _winX;
+            _winO = Board.GameBoard[i, j] == 2 ? _winO + 1 : _winO;
+            if (_winX == 3)
+            {
+                Winner = WhoWin.WinX;
+            }
+            if (_winO == 3)
+            {
+                Winner = WhoWin.WinO;
+            }
+
+        }
     }
+}

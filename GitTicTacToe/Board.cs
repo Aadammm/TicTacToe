@@ -18,18 +18,18 @@ namespace GitTicTacToe
 
         public override string ToString()
         {
-            string text = "  1 2 3\n";
+            StringBuilder text = new StringBuilder("  1 2 3\n");
             for (int i = 1; i < GameBoard.GetLength(0) + 1; i++)
             {
-                text += i + "|";
+                text.Append(i + "|");
                 for (int j = 0; j < GameBoard.GetLength(1); j++)
                 {
-                    text += playerSign[GameBoard[j, i - 1]] + "|";
+                    text.Append(playerSign[GameBoard[j, i - 1]] + "|");
                 }
-                text += "\n" + "";
+                text.Append("\n" + "");
 
             }
-            return text;
+            return text.ToString() ;
         }
         public static bool FreePlace()
         {

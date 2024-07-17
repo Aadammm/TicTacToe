@@ -30,13 +30,13 @@ namespace GitTicTacToe
         }
         static void RowsCheck()
         {
-            for (int i = 0; i < 3 && Winner == WhoWin.Nobody; i++)
+            for (int j = 0; j < 3 && Winner == WhoWin.Nobody; j++)
             {
                 _winX = 0;
                 _winO = 0;
-                for (int j = 0; j < 3 && Winner == WhoWin.Nobody; j++)
+                for (int i = 0; i < 3 && Winner == WhoWin.Nobody; i++)
                 {
-                    WinnerCheck(j,i); 
+                    WinnerCheck(i, j);
                 }
             }
 

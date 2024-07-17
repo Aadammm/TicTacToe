@@ -22,11 +22,10 @@ namespace GitTicTacToe
             _playerVs = new PlayerVs();
             _enemy = 0;
         }
-
-        public void  TicTacToe()
+        public void  Start()
         {
             DisplayMenu();
-            ChooseAgainstWhom();
+            ChooseAgainstWho();
             while (Check.Winner == WhoWin.Nobody)
             {
                 Console.Clear();
@@ -67,7 +66,7 @@ namespace GitTicTacToe
                         _board[j, i] = 0;
                     }
                 }
-                TicTacToe();
+                Start();
             }
 
         }
@@ -99,7 +98,7 @@ namespace GitTicTacToe
             }
             while (key.Key != ConsoleKey.Enter);
         }
-        private void ChooseAgainstWhom()
+        private void ChooseAgainstWho()
         {
             switch (_enemy)
             {
